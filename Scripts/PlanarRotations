@@ -2,13 +2,13 @@ using System;
 
 namespace SlimeGame {
     [Flags]
-    public enum PlaneRotations {
+    public enum PlanarRotations {
         None        = 0,            /// index:  0
         ZY          = 1,            /// index:  1
         XZ          = 2,            /// index:  2
-        XY          = 4,            /// index:  3
+        XY          = 4,            /// index:  3                              
         Positive    = 16,           /// index:  5
-        Negative    = 32,           /// index:  6
+        Negative    = 32,           /// index:  6                                     
         CW          = 512,          /// index: 10
         CCW         = 1024,         /// index: 11  
         
