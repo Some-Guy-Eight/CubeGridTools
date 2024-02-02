@@ -1,0 +1,56 @@
+using System;
+
+namespace SlimeGame {
+    public static class CornersExtensions {
+        public static bool IsNone(this Corners a) {
+            return a == 0;
+        }
+        public static bool IsSingleFlag(this Corners a) {
+            return a != 0 && (a & (a - 1)) == 0;
+        }
+        public static bool HasFlags(this Corners a,Corners b) {
+            return (a & b) == b;
+        }
+        public static Corners ToggleFlags(this Corners a,Corners b) {
+            return a ^= b;
+        }
+        public static Corners SetFlags(this Corners a,Corners b) {
+            return a | b;
+        }
+        public static Corners UnsetFlags(this Corners a,Corners b) {
+            return a & (~b);
+        }
+        public static Corners CornersMaskFromFaceDirections(this Corners _,Directions directions) {
+            switch(directions) {
+                case Directions.Right           : return Corners.Right                  ;
+                case Directions.Left            : return Corners.Left                   ;
+                case Directions.Up              : return Corners.Up                     ;
+                case Directions.Down            : return Corners.Down                   ;
+                case Directions.Fwd             : return Corners.Fwd                    ;
+                case Directions.Back            : return Corners.Back                   ;
+                case Directions.RightUp         : return Corners.RightUp                ;
+                case Directions.RightDown       : return Corners.RightDown              ;
+                case Directions.RightFwd        : return Corners.RightFwd               ;
+                case Directions.RightBack       : return Corners.RightBack              ;
+                case Directions.LeftUp          : return Corners.LeftUp                 ;
+                case Directions.LeftDown        : return Corners.LeftDown               ;
+                case Directions.LeftFwd         : return Corners.LeftFwd                ;
+                case Directions.LeftBack        : return Corners.LeftBack               ;
+                case Directions.UpFwd           : return Corners.UpFwd                  ;
+                case Directions.UpBack          : return Corners.UpBack                 ;
+                case Directions.DownFwd         : return Corners.DownFwd                ;
+                case Directions.DownBack        : return Corners.DownBack               ;
+                              
+                case Directions.LeftDownBack    : return Corners.LDB                    ;
+                case Directions.RightDownBack   : return Corners.RDB                    ;
+                case Directions.LeftUpBack      : return Corners.LUB                    ;
+                case Directions.RightUpBack     : return Corners.RUB                    ;
+                case Directions.LeftDownFwd     : return Corners.LDF                    ;
+                case Directions.RightDownFwd    : return Corners.RDF                    ;
+                case Directions.LeftUpFwd       : return Corners.LUF                    ;
+                case Directions.RightUpFwd      : return Corners.RUF                    ;
+                default: throw new Exception("failed to get corners from direcitonin switch");
+            }            
+        }
+    }
+}
