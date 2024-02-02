@@ -1,0 +1,32 @@
+using System;
+
+namespace SlimeGame {
+    [Flags]
+    public enum Planes {
+        None        = 0,            /// index:  0
+        ZY          = 1,            /// index:  1
+        XZ          = 2,            /// index:  2
+        XY          = 4,            /// index:  3
+        Normal      = 128,          /// index:  8
+        Positive    = 2048,         /// index: 12
+        Negative    = 4096,         /// index: 13
+        
+        OnlyPlanesMask = 0b_1111_1111_1111_1111_1111_1111_1111_000,
+
+        ZYNormal    = ZY | Normal,
+        XZNormal    = XZ | Normal,
+        XYNormal    = XY | Normal,
+
+        ZYPositive  = ZY | Positive ,
+        ZYNegative  = ZY | Negative ,
+        XZPositive  = XZ | Positive ,
+        XZNegative  = XZ | Negative ,
+        XYPositive  = XY | Positive ,
+        XYNegative  = XY | Negative ,
+
+        ZYXZ        = ZY | XZ       ,
+        ZYXY        = ZY | XY       ,
+        XZXY        = XZ | XY       ,
+        AllPlanes   = ZY | XZ | XY  ,
+    }
+}
