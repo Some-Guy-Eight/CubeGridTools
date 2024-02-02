@@ -1,0 +1,39 @@
+using System;
+
+namespace SlimeGame {
+    [Flags]
+    public enum Corners {
+        None        = 0,            /// index: 0
+        LDB         = 1,            /// index: 1 ( LeftDownBack     )
+        RDB         = 2,            /// index: 2 ( RightDownBack    )
+        LUB         = 4,            /// index: 3 ( LeftUpBack       )
+        RUB         = 8,            /// index: 4 ( RightUpBack      )
+        LDF         = 16,           /// index: 5 ( LeftDownFwd      )
+        RDF         = 32,           /// index: 6 ( RightDownFwd     )
+        LUF         = 64,           /// index: 7 ( LeftUpFwd        )
+        RUF         = 128,          /// index: 8 ( RightUpFwd       )
+
+        #region combinations
+        Default             = RUF,
+        All                 = LDB | RDB | LUB | RUB | LDF | RDF | LUF | RUF,
+        Right               = RDB | RUB | RDF | RUF,
+        Left                = LDB | LUB | LDF | LUF,
+        Up                  = LUB | RUB | LUF | RUF,
+        Down                = LDB | RDB | LDF | RDF,
+        Fwd                 = LDF | RDF | LUF | RUF,
+        Back                = LDB | RDB | LUB | RUB,
+        RightUp             = RUB | RUF,
+        RightDown           = RDB | RDF,
+        RightFwd            = RDF | RUF,
+        RightBack           = RDB | RUB,
+        LeftUp              = LUB | LUF,
+        LeftDown            = LDB | LDF,
+        LeftFwd             = LDF | LUF,
+        LeftBack            = LDB | LUB,
+        UpFwd               = LUF | RUF,
+        UpBack              = LUB | RUB,
+        DownFwd             = LDF | RDF,
+        DownBack            = LDB | RDB,
+        #endregion
+    }
+}
