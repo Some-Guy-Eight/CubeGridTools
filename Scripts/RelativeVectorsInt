@@ -1,0 +1,348 @@
+using UnityEngine;
+namespace SlimeGame {
+    public struct RelativeVectorsInt {
+
+        public Vector3Int right;
+        public Vector3Int up;
+        public Vector3Int fwd;
+
+        #region direction vectors
+        public static Vector3Int rightUp          => Vector3Int.right  + Vector3Int.up;
+        public static Vector3Int rightDown        => Vector3Int.right  + Vector3Int.down;
+        public static Vector3Int rightForward     => Vector3Int.right  + Vector3Int.forward;
+        public static Vector3Int rightBack        => Vector3Int.right  + Vector3Int.back;
+        public static Vector3Int leftUp           => Vector3Int.left   + Vector3Int.up;
+        public static Vector3Int leftDown         => Vector3Int.left   + Vector3Int.down;
+        public static Vector3Int leftForward      => Vector3Int.left   + Vector3Int.forward;
+        public static Vector3Int leftBack         => Vector3Int.left   + Vector3Int.back;
+        public static Vector3Int upForward        => Vector3Int.up     + Vector3Int.forward;
+        public static Vector3Int upBack           => Vector3Int.up     + Vector3Int.back;
+        public static Vector3Int downForward      => Vector3Int.down   + Vector3Int.forward;
+        public static Vector3Int downBack         => Vector3Int.down   + Vector3Int.back;
+        public static Vector3Int rightUpForward   => Vector3Int.right  + Vector3Int.up     + Vector3Int.forward;
+        public static Vector3Int rightUpBack      => Vector3Int.right  + Vector3Int.up     + Vector3Int.back;
+        public static Vector3Int rightDownForward => Vector3Int.right  + Vector3Int.down   + Vector3Int.forward;
+        public static Vector3Int rightDownBack    => Vector3Int.right  + Vector3Int.down   + Vector3Int.back;
+        public static Vector3Int leftUpForward    => Vector3Int.left   + Vector3Int.up     + Vector3Int.forward;
+        public static Vector3Int leftUpBack       => Vector3Int.left   + Vector3Int.up     + Vector3Int.back;
+        public static Vector3Int leftDownForward  => Vector3Int.left   + Vector3Int.down   + Vector3Int.forward;
+        public static Vector3Int leftDownBack     => Vector3Int.left   + Vector3Int.down   + Vector3Int.back;
+        #endregion
+        #region directions & planes relative vectors
+        public static RelativeVectorsInt Default                => _100000_001000_000010    ; /// Fwd_ZY_XY
+        public static RelativeVectorsInt Zero                   => _000000_000000_000000    ;
+        // Right_ZY_XZ_XY face
+        public static RelativeVectorsInt Right_ZY_XY            => _000001_001000_100000    ; /// Default XY & XZ
+        public static RelativeVectorsInt Right_XZ               => _001000_000010_100000    ; /// Default XZ
+        // left face
+        public static RelativeVectorsInt Left_ZY_XY             => _000010_001000_010000    ; /// Default XY & XZ
+        public static RelativeVectorsInt Left_XZ                => _000100_000010_010000    ; /// Default XZ
+        // up face                                                                            
+        public static RelativeVectorsInt Up_ZYPositive          => _000001_010000_001000    ; /// Default ZY
+        public static RelativeVectorsInt Up_ZYNegative          => _000010_100000_001000    ;
+        public static RelativeVectorsInt Up_XZ                  => _010000_000010_001000    ; /// Default XZ
+        public static RelativeVectorsInt Up_XYPositive          => _100000_000001_001000    ; /// Default XY
+        public static RelativeVectorsInt Up_XYNegative          => _010000_000010_001000    ;
+        // down face
+        public static RelativeVectorsInt Down_ZYPositive        => _000001_100000_000100    ; /// Default ZY
+        public static RelativeVectorsInt Down_ZYNegative        => _000010_010000_000100    ;
+        public static RelativeVectorsInt Down_XZ                => _100000_000010_000100    ; /// Default XZ
+        public static RelativeVectorsInt Down_XYPositive        => _100000_000010_000100    ; /// Default XY
+        public static RelativeVectorsInt Down_XYNegative        => _010000_000001_000100    ;
+        // fwd face
+        public static RelativeVectorsInt Fwd_ZY_XY              => _100000_001000_000010    ; /// Default ZY & XY
+        public static RelativeVectorsInt Fwd_XZPositive         => _010000_000100_000010    ; /// Default XZ
+        public static RelativeVectorsInt Fwd_XZNegative         => _100000_001000_000010    ; 
+        // back face
+        public static RelativeVectorsInt Back_ZY_XY             => _010000_001000_000001    ; /// Default ZY & XY
+        public static RelativeVectorsInt Back_XZPositive        => _010000_001000_000001    ; /// Default XZ
+        public static RelativeVectorsInt Back_XZNegative        => _100000_000100_000001    ;
+        // ZY & XY edge ( including: XZ UB & DF )
+        public static RelativeVectorsInt RightUp_ZY_XY          => _000001_011000_101000    ;
+        public static RelativeVectorsInt RightDown_ZY_XY        => _000001_101000_100100    ; 
+        public static RelativeVectorsInt RightFwd_ZY_XY         => _100001_001000_100010    ; 
+        public static RelativeVectorsInt RightBack_ZY_XY        => _010001_001000_100001    ;
+        public static RelativeVectorsInt LeftUp_ZY_XY           => _000010_101000_011000    ;
+        public static RelativeVectorsInt LeftDown_ZY_XY         => _000010_011000_010100    ;
+        public static RelativeVectorsInt LeftFwd_ZY_XY          => _100010_001000_010010    ;
+        public static RelativeVectorsInt LeftBack_ZY_XY         => _010010_001000_010001    ;
+        public static RelativeVectorsInt UpFwd_ZY_XY            => _100000_001001_001010    ; 
+        public static RelativeVectorsInt UpBack_ZY_XZ_XY        => _010000_001010_001001    ;
+        public static RelativeVectorsInt DownFwd_ZY_XZ_XY       => _100000_001010_000110    ;
+        public static RelativeVectorsInt DownBack_ZY_XY         => _010000_001001_000101    ;
+        // ZY & XY corner
+        public static RelativeVectorsInt RightUpFwd_ZY_XY       => _100001_011001_101010    ;
+        public static RelativeVectorsInt RightUpBack_ZY_XY      => _100001_011010_101001    ; 
+        public static RelativeVectorsInt RightDownFwd_ZY_XY     => _010001_101010_100110    ; 
+        public static RelativeVectorsInt RightDownBack_ZY_XY    => _010001_101001_100101    ; 
+        public static RelativeVectorsInt LeftUpFwd_ZY_XY        => _100010_101001_011010    ; 
+        public static RelativeVectorsInt LeftUpBack_ZY_XY       => _010010_101010_011001    ; 
+        public static RelativeVectorsInt LeftDownFwd_ZY_XY      => _100010_011010_010110    ; 
+        public static RelativeVectorsInt LeftDownBack_ZY_XY     => _010010_011001_010101    ;
+        // XZ edge ( except: XZ UB & DF => same as XZ & XY edge )
+        public static RelativeVectorsInt RightUp_XZ             => _011000_000010_101000    ;
+        public static RelativeVectorsInt RightDown_XZ           => _101000_000010_100100    ;
+        public static RelativeVectorsInt RightFwd_XZ            => _001000_010010_100010    ;
+        public static RelativeVectorsInt RightBack_XZ           => _001000_100010_100001    ;
+        public static RelativeVectorsInt LeftUp_XZ              => _010100_000010_011000    ; 
+        public static RelativeVectorsInt LeftDown_XZ            => _100100_000010_010100    ;
+        public static RelativeVectorsInt LeftFwd_XZ             => _000100_100010_010010    ;
+        public static RelativeVectorsInt LeftBack_XZ            => _000100_010010_010001    ;
+        public static RelativeVectorsInt UpFwd_XZ               => _010000_000110_001010    ;
+        public static RelativeVectorsInt DownBack_XZ            => _100000_000110_000101    ;
+        // XZ corner                                                                         
+        public static RelativeVectorsInt RightUpFwd_XZ          => _011000_010110_101010    ;
+        public static RelativeVectorsInt RightUpBack_XZ         => _011000_101010_101001    ;
+        public static RelativeVectorsInt RightDownFwd_XZ        => _101000_011010_100110    ;
+        public static RelativeVectorsInt RightDownBack_XZ       => _101000_100110_100101    ;
+        public static RelativeVectorsInt LeftUpFwd_XZ           => _010100_100110_011010    ;
+        public static RelativeVectorsInt LeftUpBack_XZ          => _010100_011010_011001    ;
+        public static RelativeVectorsInt LeftDownFwd_XZ         => _100100_101010_010110    ;
+        public static RelativeVectorsInt LeftDownBack_XZ        => _100100_010110_010101    ;
+        #endregion
+        #region bitstring relative vectors
+        // right    _100000
+        // left     _010000
+        // up       _001000
+        // down     _000100
+        // fwd      _000010      
+        // back     _000001 
+        // ZY Planes ( x axis ) == { ZY Planes ( z axis ) => ZY Planes ( x axis ) }
+        // XZ Planes ( y axis ) == { ZY Planes ( z axis ) => XZ Planes ( y axis ) }
+        // XY Planes ( z axis ) == { ZY Planes ( z axis ) }
+        // * Default Planes => XY Planes
+
+        // zero
+        public static RelativeVectorsInt _000000_000000_000000 => new RelativeVectorsInt { right = Vector3Int.zero      , up = Vector3Int.zero      , fwd = Vector3Int.zero     };
+        // Right_ZY_XZ_XY
+        public static RelativeVectorsInt _000001_001000_100000 => new RelativeVectorsInt { right = Vector3Int.back      , up = Vector3Int.up        , fwd = Vector3Int.right    }; // ZY & XY           => Default ZY & XY
+        public static RelativeVectorsInt _001000_000010_100000 => new RelativeVectorsInt { right = Vector3Int.up        , up = Vector3Int.forward   , fwd = Vector3Int.right    }; // XZ                => Default XZ
+        // left
+        public static RelativeVectorsInt _000010_001000_010000 => new RelativeVectorsInt { right = Vector3Int.forward   , up = Vector3Int.up        , fwd = Vector3Int.left     }; // ZY & XY           => Default ZY & XY
+        public static RelativeVectorsInt _000100_000010_010000 => new RelativeVectorsInt { right = Vector3Int.down      , up = Vector3Int.forward   , fwd = Vector3Int.left     }; // XZ                => Default XZ
+        // up
+        public static RelativeVectorsInt _000001_010000_001000 => new RelativeVectorsInt { right = Vector3Int.back      , up = Vector3Int.left      , fwd = Vector3Int.up       }; // ZYRight           => Default ZY
+        public static RelativeVectorsInt _000010_100000_001000 => new RelativeVectorsInt { right = Vector3Int.forward   , up = Vector3Int.right     , fwd = Vector3Int.up       }; // ZYLeft 
+        public static RelativeVectorsInt _010000_000010_001000 => new RelativeVectorsInt { right = Vector3Int.left      , up = Vector3Int.forward   , fwd = Vector3Int.up       }; // XZFwd & XYBack    => Default XZ
+        public static RelativeVectorsInt _100000_000001_001000 => new RelativeVectorsInt { right = Vector3Int.right     , up = Vector3Int.back      , fwd = Vector3Int.up       }; // XYForward
+        // down
+        public static RelativeVectorsInt _000001_100000_000100 => new RelativeVectorsInt { right = Vector3Int.back      , up = Vector3Int.right     , fwd = Vector3Int.down     }; // ZYRight           => Default ZY
+        public static RelativeVectorsInt _000010_010000_000100 => new RelativeVectorsInt { right = Vector3Int.forward   , up = Vector3Int.left      , fwd = Vector3Int.down     }; // ZYLeft    
+        public static RelativeVectorsInt _100000_000010_000100 => new RelativeVectorsInt { right = Vector3Int.right     , up = Vector3Int.forward   , fwd = Vector3Int.down     }; // XZFwd & XZBack    => Default XZ & XY
+        public static RelativeVectorsInt _010000_000001_000100 => new RelativeVectorsInt { right = Vector3Int.left      , up = Vector3Int.back      , fwd = Vector3Int.down     }; // XYBack 
+        // fwd
+        public static RelativeVectorsInt _100000_001000_000010 => new RelativeVectorsInt { right = Vector3Int.right     , up = Vector3Int.up        , fwd = Vector3Int.forward  }; // ZY, XZDown & XY   => Default ZY & XY
+        public static RelativeVectorsInt _010000_000100_000010 => new RelativeVectorsInt { right = Vector3Int.left      , up = Vector3Int.down      , fwd = Vector3Int.forward  }; // XZUp              => Default XZ
+        // back
+        public static RelativeVectorsInt _010000_001000_000001 => new RelativeVectorsInt { right = Vector3Int.left      , up = Vector3Int.up        , fwd = Vector3Int.back     }; // ZY, XZUp & XY     => Default ZY, XZ, & ZY 
+        public static RelativeVectorsInt _100000_000100_000001 => new RelativeVectorsInt { right = Vector3Int.right     , up = Vector3Int.down      , fwd = Vector3Int.back     }; // XZDown        
+        // ZY & XY edge ( including: XZ UB & DF )
+        public static RelativeVectorsInt _000001_011000_101000 => new RelativeVectorsInt { right = Vector3Int.back      , up = leftUp               , fwd = rightUp             }; // RU  ZY & XY       => Default
+        public static RelativeVectorsInt _000001_101000_100100 => new RelativeVectorsInt { right = Vector3Int.back      , up = rightUp              , fwd = rightDown           }; // RD  ZY & XY       => Default
+        public static RelativeVectorsInt _100001_001000_100010 => new RelativeVectorsInt { right = rightBack            , up = Vector3Int.up        , fwd = rightForward        }; // RF  ZY & XY       => Default
+        public static RelativeVectorsInt _010001_001000_100001 => new RelativeVectorsInt { right = leftBack             , up = Vector3Int.up        , fwd = rightBack           }; // RB  ZY & XY       => Default
+        public static RelativeVectorsInt _000010_101000_011000 => new RelativeVectorsInt { right = Vector3Int.forward   , up = rightUp              , fwd = leftUp              }; // LU  ZY & XY       => Default
+        public static RelativeVectorsInt _000010_011000_010100 => new RelativeVectorsInt { right = Vector3Int.forward   , up = leftUp               , fwd = leftDown            }; // LD  ZY & XY       => Default
+        public static RelativeVectorsInt _100010_001000_010010 => new RelativeVectorsInt { right = rightForward         , up = Vector3Int.up        , fwd = leftForward         }; // LF  ZY & XY       => Default
+        public static RelativeVectorsInt _010010_001000_010001 => new RelativeVectorsInt { right = leftForward          , up = Vector3Int.up        , fwd = leftBack            }; // LB  ZY & XY       => Default
+        public static RelativeVectorsInt _100000_001001_001010 => new RelativeVectorsInt { right = Vector3Int.right     , up = upBack               , fwd = upForward           }; // UF  ZY & XY       => Default
+        public static RelativeVectorsInt _010000_001010_001001 => new RelativeVectorsInt { right = Vector3Int.left      , up = upForward            , fwd = upBack              }; // UB  ZY, XZ & XY   => Default
+        public static RelativeVectorsInt _100000_001010_000110 => new RelativeVectorsInt { right = Vector3Int.right     , up = upForward            , fwd = downForward         }; // DF  ZY, XZ, & XY  => Default
+        public static RelativeVectorsInt _010000_001001_000101 => new RelativeVectorsInt { right = Vector3Int.left      , up = upBack               , fwd = downBack            }; // DB  ZY & XY       => Default
+        public static RelativeVectorsInt _100001_011001_101010 => new RelativeVectorsInt { right = rightBack            , up = leftUpBack           , fwd = rightUpForward      }; // RF  ZY & XY       => Default
+        // corner
+        public static RelativeVectorsInt _100001_011010_101001 => new RelativeVectorsInt { right = rightBack            , up = leftUpForward        , fwd = rightUpBack         }; // RUB ZY & XY       => Default
+        public static RelativeVectorsInt _010001_101010_100110 => new RelativeVectorsInt { right = leftBack             , up = rightUpForward       , fwd = rightDownForward    }; // RDF ZY & XY       => Default
+        public static RelativeVectorsInt _010001_101001_100101 => new RelativeVectorsInt { right = leftBack             , up = rightUpBack          , fwd = rightDownBack       }; // RDB ZY & XY       => Default
+        public static RelativeVectorsInt _100010_101001_011010 => new RelativeVectorsInt { right = rightForward         , up = rightUpBack          , fwd = leftUpForward       }; // LUF ZY & XY       => Default
+        public static RelativeVectorsInt _010010_101010_011001 => new RelativeVectorsInt { right = leftForward          , up = rightUpForward       , fwd = leftUpBack          }; // LUB ZY & XY       => Default
+        public static RelativeVectorsInt _100010_011010_010110 => new RelativeVectorsInt { right = rightForward         , up = leftUpForward        , fwd = leftDownForward     }; // LDF ZY & XY       => Default
+        public static RelativeVectorsInt _010010_011001_010101 => new RelativeVectorsInt { right = leftForward          , up = leftUpBack           , fwd = leftDownBack        }; // LDB ZY & XY       => Default
+        // XZ edge ( except: XZ UB & DF => in XZ & XY edge )
+        public static RelativeVectorsInt _011000_000010_101000 => new RelativeVectorsInt { right = leftUp               , up = Vector3Int.forward   , fwd = rightUp             }; // RU  XZ
+        public static RelativeVectorsInt _101000_000010_100100 => new RelativeVectorsInt { right = rightUp              , up = Vector3Int.forward   , fwd = rightDown           }; // RD  XZ
+        public static RelativeVectorsInt _001000_010010_100010 => new RelativeVectorsInt { right = Vector3Int.up        , up = leftForward          , fwd = rightForward        }; // RF  XZ
+        public static RelativeVectorsInt _001000_100010_100001 => new RelativeVectorsInt { right = Vector3Int.up        , up = rightForward         , fwd = rightBack           }; // RB  XZ
+        public static RelativeVectorsInt _010100_000010_011000 => new RelativeVectorsInt { right = leftDown             , up = Vector3Int.forward   , fwd = leftUp              }; // LU  XZ
+        public static RelativeVectorsInt _100100_000010_010100 => new RelativeVectorsInt { right = rightDown            , up = Vector3Int.forward   , fwd = leftDown            }; // LD  XZ
+        public static RelativeVectorsInt _000100_100010_010010 => new RelativeVectorsInt { right = Vector3Int.down      , up = rightForward         , fwd = leftForward         }; // LF  XZ
+        public static RelativeVectorsInt _000100_010010_010001 => new RelativeVectorsInt { right = Vector3Int.down      , up = leftForward          , fwd = leftBack            }; // LB  XZ        
+        public static RelativeVectorsInt _010000_000110_001010 => new RelativeVectorsInt { right = Vector3Int.left      , up = downForward          , fwd = upForward           }; // UF  XZ
+        public static RelativeVectorsInt _100000_000110_000101 => new RelativeVectorsInt { right = Vector3Int.right     , up = downForward          , fwd = downBack            }; // DB  XZ
+        // XZ corner
+        public static RelativeVectorsInt _011000_010110_101010 => new RelativeVectorsInt { right = leftUp               , up = leftDownForward      , fwd = rightUpForward      }; // RUF XZ     
+        public static RelativeVectorsInt _011000_101010_101001 => new RelativeVectorsInt { right = leftUp               , up = rightUpForward       , fwd = rightUpBack         }; // RUB XZ        
+        public static RelativeVectorsInt _101000_011010_100110 => new RelativeVectorsInt { right = rightUp              , up = leftUpForward        , fwd = rightDownForward    }; // RDF XZ   
+        public static RelativeVectorsInt _101000_100110_100101 => new RelativeVectorsInt { right = rightUp              , up = rightDownForward     , fwd = rightDownBack       }; // RDB XZ      
+        public static RelativeVectorsInt _010100_100110_011010 => new RelativeVectorsInt { right = leftDown             , up = rightDownForward     , fwd = leftUpForward       }; // LUF XZ      
+        public static RelativeVectorsInt _010100_011010_011001 => new RelativeVectorsInt { right = leftDown             , up = leftUpForward        , fwd = leftUpBack          }; // LUB XZ        
+        public static RelativeVectorsInt _100100_101010_010110 => new RelativeVectorsInt { right = rightDown            , up = rightUpForward       , fwd = leftDownForward     }; // LDF XZ    
+        public static RelativeVectorsInt _100100_010110_010101 => new RelativeVectorsInt { right = rightDown            , up = leftDownForward      , fwd = leftDownBack        }; // LDB XZ
+        #endregion                                                                                                                                                                                                                                                                                                                    
+
+        public static RelativeVectorsInt FromDirection(Direction direction) {
+            return FromDirectionXYPlane(direction);
+        }
+        public static RelativeVectorsInt FromDirections(Directions directions) {
+            return FromDirectionXYPlane(directions.ToDirection());
+        }
+        public static RelativeVectorsInt FromDirectionAndPlane(Direction direction,Planes planes = Planes.XYPositive) {
+            switch(planes) {
+                case Planes.ZYPositive  : return FromDirectionXYPlane(direction,true    );
+                case Planes.ZYNegative  : return FromDirectionXYPlane(direction,false   );
+                case Planes.XZPositive  : return FromDirectionXYPlane(direction,true    );
+                case Planes.XZNegative  : return FromDirectionXYPlane(direction,false   );
+                case Planes.XYPositive  : return FromDirectionXYPlane(direction,true    );
+                case Planes.XYNegative  : return FromDirectionXYPlane(direction,false   );
+                case Planes.ZY          : return FromDirectionZYPlane(direction);
+                case Planes.XZ          : return FromDirectionXZPlane(direction);
+                case Planes.XY          : return FromDirectionXYPlane(direction);
+                default: return FromDirectionXYPlane(direction);
+            }
+        }
+        /// <summary>
+        /// oriented from Z axis ( Planes.XY ) => X axis ( Planes.ZY )
+        /// </summary>
+        public static RelativeVectorsInt FromDirectionZYPlane(Direction direction,bool hasRight = true) {
+            RelativeVectorsInt tempVectors;
+            switch(direction) {
+                case Direction.Right                : tempVectors = Right_ZY_XY             ; break;
+                case Direction.Left                 : tempVectors = Left_ZY_XY              ; break;
+                case Direction.Up:
+                    if(hasRight) {
+                        tempVectors = Up_ZYPositive;
+                        break;
+                    }
+                    tempVectors = Up_ZYNegative;
+                    break;
+                case Direction.Down:
+                    if(hasRight) {
+                        tempVectors = Down_ZYPositive;
+                        break;
+                    }
+                    tempVectors = Down_ZYNegative;
+                    break;
+                case Direction.Fwd                  : tempVectors = Fwd_ZY_XY               ; break;
+                case Direction.Back                 : tempVectors = Back_ZY_XY              ; break;
+                case Direction.RightUp              : tempVectors = RightUp_ZY_XY           ; break;
+                case Direction.RightDown            : tempVectors = RightDown_ZY_XY         ; break;
+                case Direction.RightFwd             : tempVectors = RightFwd_ZY_XY          ; break;
+                case Direction.RightBack            : tempVectors = RightBack_ZY_XY         ; break;
+                case Direction.LeftUp               : tempVectors = LeftUp_ZY_XY            ; break;
+                case Direction.LeftDown             : tempVectors = LeftDown_ZY_XY          ; break;
+                case Direction.LeftFwd              : tempVectors = LeftFwd_ZY_XY           ; break;
+                case Direction.LeftBack             : tempVectors = LeftBack_ZY_XY          ; break;
+                case Direction.UpFwd                : tempVectors = UpFwd_ZY_XY             ; break;
+                case Direction.UpBack               : tempVectors = UpBack_ZY_XZ_XY         ; break;
+                case Direction.DownFwd              : tempVectors = DownFwd_ZY_XZ_XY        ; break;
+                case Direction.DownBack             : tempVectors = DownBack_ZY_XY          ; break;
+                case Direction.RightUpFwd           : tempVectors = RightUpFwd_ZY_XY        ; break;
+                case Direction.RightUpBack          : tempVectors = RightUpBack_ZY_XY       ; break;
+                case Direction.RightDownFwd         : tempVectors = RightDownFwd_ZY_XY      ; break;
+                case Direction.RightDownBack        : tempVectors = RightDownBack_ZY_XY     ; break;
+                case Direction.LeftUpFwd            : tempVectors = LeftUpFwd_ZY_XY         ; break;
+                case Direction.LeftUpBack           : tempVectors = LeftUpBack_ZY_XY        ; break;
+                case Direction.LeftDownFwd          : tempVectors = LeftDownFwd_ZY_XY       ; break;
+                case Direction.LeftDownBack         : tempVectors = LeftDownBack_ZY_XY      ; break;
+                default                             : tempVectors = Default                 ; break;
+            }   
+            return tempVectors;
+        }
+        /// <summary>
+        /// oriented from Z axis ( Planes.XY ) => Y axis ( Planes.XZ )
+        /// </summary>
+        public static RelativeVectorsInt FromDirectionXZPlane(Direction direction,bool hasUp = true) {
+            RelativeVectorsInt tempVectors;
+            switch(direction) {
+                case Direction.Right                : tempVectors = Right_XZ                ; break;
+                case Direction.Left                 : tempVectors = Left_XZ                 ; break;
+                case Direction.Up                   : tempVectors = Up_XZ                   ; break;
+                case Direction.Down                 : tempVectors = Down_XZ                 ; break;
+                case Direction.Fwd:
+                    if(hasUp) {
+                        tempVectors = Fwd_XZPositive;
+                        break;
+                    }
+                    tempVectors = Fwd_XZNegative;
+                    break;
+                case Direction.Back:
+                    if(hasUp) {
+                        tempVectors = Back_XZPositive;
+                        break;
+                    }
+                    tempVectors = Back_XZNegative;
+                    break;
+                case Direction.RightUp              : tempVectors = RightUp_XZ              ; break;
+                case Direction.RightDown            : tempVectors = RightDown_XZ            ; break;
+                case Direction.RightFwd             : tempVectors = RightFwd_XZ             ; break;
+                case Direction.RightBack            : tempVectors = RightBack_XZ            ; break;
+                case Direction.LeftUp               : tempVectors = LeftUp_XZ               ; break;
+                case Direction.LeftDown             : tempVectors = LeftDown_XZ             ; break;
+                case Direction.LeftFwd              : tempVectors = LeftFwd_XZ              ; break;
+                case Direction.LeftBack             : tempVectors = LeftBack_XZ             ; break;
+                case Direction.UpFwd                : tempVectors = UpFwd_XZ                ; break;
+                case Direction.UpBack               : tempVectors = UpBack_ZY_XZ_XY         ; break;
+                case Direction.DownFwd              : tempVectors = DownFwd_ZY_XZ_XY        ; break;
+                case Direction.DownBack             : tempVectors = DownBack_XZ             ; break;
+                case Direction.RightUpFwd           : tempVectors = RightUpFwd_XZ           ; break;
+                case Direction.RightUpBack          : tempVectors = RightUpBack_XZ          ; break;
+                case Direction.RightDownFwd         : tempVectors = RightDownFwd_XZ         ; break;
+                case Direction.RightDownBack        : tempVectors = RightDownBack_XZ        ; break;
+                case Direction.LeftUpFwd            : tempVectors = LeftUpFwd_XZ            ; break;
+                case Direction.LeftUpBack           : tempVectors = LeftUpBack_XZ           ; break;
+                case Direction.LeftDownFwd          : tempVectors = LeftDownFwd_XZ          ; break;
+                case Direction.LeftDownBack         : tempVectors = LeftDownBack_XZ         ; break;
+                default                             : tempVectors = Default                 ; break;
+            }   
+            return tempVectors;
+        }
+        /// <summary>
+        /// oriented on Z axis ( Default ) => oriented on Z axis ( Planes.XY )
+        /// </summary>
+        public static RelativeVectorsInt FromDirectionXYPlane(Direction direction,bool hasForward = true) {
+            RelativeVectorsInt tempVectors;
+            switch(direction) {
+                case Direction.Right                : tempVectors = Right_ZY_XY             ; break;
+                case Direction.Left                 : tempVectors = Left_ZY_XY              ; break;
+                case Direction.Up                   : 
+                    if(hasForward) {
+                        tempVectors = Up_XYPositive;
+                        break;
+                    }
+                    tempVectors = Up_XYNegative;
+                    break;
+                case Direction.Down                 :
+                    if(hasForward) {
+                        tempVectors = Down_XYPositive;
+                        break;
+                    }
+                    tempVectors = Down_XYNegative;
+                    break;
+                case Direction.Fwd                  : tempVectors = Fwd_ZY_XY               ; break;
+                case Direction.Back                 : tempVectors = Back_ZY_XY              ; break;
+                case Direction.RightUp              : tempVectors = RightUp_ZY_XY           ; break;
+                case Direction.RightDown            : tempVectors = RightDown_ZY_XY         ; break;
+                case Direction.RightFwd             : tempVectors = RightFwd_ZY_XY          ; break;
+                case Direction.RightBack            : tempVectors = RightBack_ZY_XY         ; break;
+                case Direction.LeftUp               : tempVectors = LeftUp_ZY_XY            ; break;
+                case Direction.LeftDown             : tempVectors = LeftDown_ZY_XY          ; break;
+                case Direction.LeftFwd              : tempVectors = LeftFwd_ZY_XY           ; break;
+                case Direction.LeftBack             : tempVectors = LeftBack_ZY_XY          ; break;
+                case Direction.UpFwd                : tempVectors = UpFwd_ZY_XY             ; break;
+                case Direction.UpBack               : tempVectors = UpBack_ZY_XZ_XY         ; break;
+                case Direction.DownFwd              : tempVectors = DownFwd_ZY_XZ_XY        ; break;
+                case Direction.DownBack             : tempVectors = DownBack_ZY_XY          ; break;
+                case Direction.RightUpFwd           : tempVectors = RightUpFwd_ZY_XY        ; break;
+                case Direction.RightUpBack          : tempVectors = RightUpBack_ZY_XY       ; break;
+                case Direction.RightDownFwd         : tempVectors = RightDownFwd_ZY_XY      ; break;
+                case Direction.RightDownBack        : tempVectors = RightDownBack_ZY_XY     ; break;
+                case Direction.LeftUpFwd            : tempVectors = LeftUpFwd_ZY_XY         ; break;
+                case Direction.LeftUpBack           : tempVectors = LeftUpBack_ZY_XY        ; break;
+                case Direction.LeftDownFwd          : tempVectors = LeftDownFwd_ZY_XY       ; break;
+                case Direction.LeftDownBack         : tempVectors = LeftDownBack_ZY_XY      ; break;
+                default                             : tempVectors = Default                 ; break;
+            }   
+            return tempVectors;
+        }
+    }
+}
