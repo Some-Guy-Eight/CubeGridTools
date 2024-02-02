@@ -1,0 +1,207 @@
+using System;
+using UnityEngine;
+using Sylves;
+
+namespace SlimeGame {
+    public static class DirectionExtensions {
+        public static Planes GetPlane(this Direction direction) {
+            switch(direction) {
+                case Direction.Right or Direction.Left:     return Planes.ZY;
+                case Direction.Up or Direction.Down:        return Planes.XZ;
+                case Direction.Fwd or Direction.Back:       return Planes.XY;
+                default: Debug.Log($"Failed to get plane from index -> returning Planes.None");
+                    return Planes.None;
+            }
+        }
+        public static int AxisPoint(this Direction direction,Vector3Int vector) {
+            switch(direction) {
+                case Direction.Right or Direction.Left:     return vector.x;
+                case Direction.Up or Direction.Down:        return vector.y;
+                case Direction.Fwd or Direction.Back:       return vector.z;
+                default: throw new Exception($"Failed to get Axis component from Directions");
+            }
+        }
+        public static Vector3Int AxisPosition(this Direction direction,Vector3Int position) {
+            switch(direction) {
+                case Direction.Right or Direction.Left:     return new Vector3Int(position.x,0,0);
+                case Direction.Up or Direction.Down:        return new Vector3Int(0,position.y,0);
+                case Direction.Fwd or Direction.Back:       return new Vector3Int(0,0,position.z);
+                default: throw new Exception($"Failed to get World Axis Offsets {direction}");
+            }
+        }
+        public static Direction Invert(this Direction direction) {
+            switch(direction) {
+                case Direction.Right:           return Direction.Left;
+                case Direction.Left:            return Direction.Right;
+                case Direction.Up:              return Direction.Down;
+                case Direction.Down:            return Direction.Up;
+                case Direction.Fwd:             return Direction.Back;
+                case Direction.Back:            return Direction.Fwd;
+                case Direction.RightUp:         return Direction.LeftDown;
+                case Direction.RightDown:       return Direction.LeftUp;
+                case Direction.RightFwd:        return Direction.LeftBack;
+                case Direction.RightBack:       return Direction.LeftFwd;
+                case Direction.LeftUp:          return Direction.RightDown;
+                case Direction.LeftDown:        return Direction.RightUp;
+                case Direction.LeftFwd:         return Direction.RightBack;
+                case Direction.LeftBack:        return Direction.RightFwd;
+                case Direction.UpFwd:           return Direction.DownBack;
+                case Direction.UpBack:          return Direction.DownFwd;
+                case Direction.DownFwd:         return Direction.UpBack;
+                case Direction.DownBack:        return Direction.UpFwd;
+                case Direction.RightUpFwd:      return Direction.LeftDownBack;
+                case Direction.RightUpBack:     return Direction.LeftDownFwd;
+                case Direction.RightDownFwd:    return Direction.LeftUpBack;
+                case Direction.RightDownBack:   return Direction.LeftUpFwd;
+                case Direction.LeftUpFwd:       return Direction.RightDownBack;
+                case Direction.LeftUpBack:      return Direction.RightDownFwd;
+                case Direction.LeftDownFwd:     return Direction.RightUpBack;
+                case Direction.LeftDownBack:    return Direction.RightUpFwd;
+                default:                        return Direction.None;
+            }
+        }
+        public static Directions ToDirections(this Direction direction) {
+            switch(direction) {
+                case Direction.Right:           return Directions.Right;
+                case Direction.Left:            return Directions.Left;
+                case Direction.Up:              return Directions.Up;
+                case Direction.Down:            return Directions.Down;
+                case Direction.Fwd:             return Directions.Fwd;
+                case Direction.Back:            return Directions.Back;
+                case Direction.RightUp:         return Directions.RightUp;
+                case Direction.RightDown:       return Directions.RightDown;
+                case Direction.RightFwd:        return Directions.RightFwd;
+                case Direction.RightBack:       return Directions.RightBack;
+                case Direction.LeftUp:          return Directions.LeftUp;
+                case Direction.LeftDown:        return Directions.LeftDown;
+                case Direction.LeftFwd:         return Directions.LeftFwd;
+                case Direction.LeftBack:        return Directions.LeftBack;
+                case Direction.UpFwd:           return Directions.UpFwd;
+                case Direction.UpBack:          return Directions.UpBack;
+                case Direction.DownFwd:         return Directions.DownFwd;
+                case Direction.DownBack:        return Directions.DownBack;
+                case Direction.RightUpFwd:      return Directions.RightUpFwd;
+                case Direction.RightUpBack:     return Directions.RightUpBack;
+                case Direction.RightDownFwd:    return Directions.RightDownFwd;
+                case Direction.RightDownBack:   return Directions.RightDownBack;
+                case Direction.LeftUpFwd:       return Directions.LeftUpFwd;
+                case Direction.LeftUpBack:      return Directions.LeftUpBack;
+                case Direction.LeftDownFwd:     return Directions.LeftDownFwd;
+                case Direction.LeftDownBack:    return Directions.LeftDownBack;
+                default:                        return Directions.None;
+            }
+        }
+        //public static CellDir ToCellDir(this Direction direction) {
+        //    switch(direction) {
+        //        case Direction.Right:       return (CellDir)CubeDir.Right;
+        //        case Direction.Left:        return (CellDir)CubeDir.Left;
+        //        case Direction.Up:          return (CellDir)CubeDir.Up;
+        //        case Direction.Down:        return (CellDir)CubeDir.Down;
+        //        case Direction.Fwd:         return (CellDir)CubeDir.Forward;
+        //        case Direction.Back:        return (CellDir)CubeDir.Back;
+        //        default: throw new Exception($"Failed to convert Dir -> CellDir");
+        //    }
+        //}
+        //public static CubeDir ToCubeDir(this Direction direction) {
+        //    switch(direction) {
+        //        case Direction.Right:       return CubeDir.Right;
+        //        case Direction.Left:        return CubeDir.Left;
+        //        case Direction.Up:          return CubeDir.Up;
+        //        case Direction.Down:        return CubeDir.Down;
+        //        case Direction.Fwd:         return CubeDir.Forward;
+        //        case Direction.Back:        return CubeDir.Back;
+        //        default: throw new Exception($"Failed to convert Dir -> CubeDir");
+        //    }
+        //}
+        //public static Direction ToDirection(this CellDir dir) {
+        //    switch((CubeDir)dir) {
+        //        case CubeDir.Right:         return Direction.Right;
+        //        case CubeDir.Left:          return Direction.Left;
+        //        case CubeDir.Up:            return Direction.Up;
+        //        case CubeDir.Down:          return Direction.Down;
+        //        case CubeDir.Forward:       return Direction.Fwd;
+        //        case CubeDir.Back:          return Direction.Back;
+        //        default: throw new Exception($"Failed to convert Dir -> CellDir");
+        //    }
+        //}
+        //public static Direction ToDirection(this CubeDir dir) {
+        //    switch(dir) {
+        //        case CubeDir.Right:         return Direction.Right;
+        //        case CubeDir.Left:          return Direction.Left;
+        //        case CubeDir.Up:            return Direction.Up;
+        //        case CubeDir.Down:          return Direction.Down;
+        //        case CubeDir.Forward:       return Direction.Fwd;
+        //        case CubeDir.Back:          return Direction.Back;
+        //        default: throw new Exception($"Failed to convert Dir -> CellDir");
+        //    }
+        //}
+        public static Vector3Int ToVector(this Direction direction) {
+            switch(direction) {
+                case Direction.Right:               return Vector3Int.right;
+                case Direction.Left:                return Vector3Int.left;
+                case Direction.Up:                  return Vector3Int.up;
+                case Direction.Down:                return Vector3Int.down;
+                case Direction.Fwd:                 return Vector3Int.forward;
+                case Direction.Back:                return Vector3Int.back;
+                case Direction.RightUp:             return Vector3Int.right + Vector3Int.up;
+                case Direction.RightDown:           return Vector3Int.right + Vector3Int.down;
+                case Direction.RightFwd:            return Vector3Int.right + Vector3Int.forward;
+                case Direction.RightBack:           return Vector3Int.right + Vector3Int.back;
+                case Direction.LeftUp:              return Vector3Int.left  + Vector3Int.up;
+                case Direction.LeftDown:            return Vector3Int.left  + Vector3Int.down;
+                case Direction.LeftFwd:             return Vector3Int.left  + Vector3Int.forward;
+                case Direction.LeftBack:            return Vector3Int.left  + Vector3Int.back;
+                case Direction.UpFwd:               return Vector3Int.up    + Vector3Int.forward;
+                case Direction.UpBack:              return Vector3Int.up    + Vector3Int.back;
+                case Direction.DownFwd:             return Vector3Int.down  + Vector3Int.forward;
+                case Direction.DownBack:            return Vector3Int.down  + Vector3Int.back;
+                case Direction.RightUpFwd:          return Vector3Int.right + Vector3Int.up     + Vector3Int.forward;
+                case Direction.RightUpBack:         return Vector3Int.right + Vector3Int.up     + Vector3Int.back;
+                case Direction.RightDownFwd:        return Vector3Int.right + Vector3Int.down   + Vector3Int.forward;
+                case Direction.RightDownBack:       return Vector3Int.right + Vector3Int.down   + Vector3Int.back;
+                case Direction.LeftUpFwd:           return Vector3Int.left  + Vector3Int.up     + Vector3Int.forward;
+                case Direction.LeftUpBack:          return Vector3Int.left  + Vector3Int.up     + Vector3Int.back;
+                case Direction.LeftDownFwd:         return Vector3Int.left  + Vector3Int.down   + Vector3Int.forward;
+                case Direction.LeftDownBack:        return Vector3Int.left  + Vector3Int.down   + Vector3Int.back;
+                default:
+                    Debug.Log($"Failed to get Vector3Int from Directions -> returning Vector3Int.zero");
+                    return Vector3Int.zero;
+            }
+        }     
+        public static DirectionTypes GetDirectionType(this Direction direction) {
+            switch(direction) {
+                case Direction.Right:
+                case Direction.Left:
+                case Direction.Up:
+                case Direction.Down:
+                case Direction.Fwd:
+                case Direction.Back:
+                    return DirectionTypes.Face;
+                case Direction.RightUp:
+                case Direction.RightDown:
+                case Direction.RightFwd:
+                case Direction.RightBack:
+                case Direction.LeftUp:
+                case Direction.LeftDown:
+                case Direction.LeftFwd:
+                case Direction.LeftBack:
+                case Direction.UpFwd:
+                case Direction.UpBack:
+                case Direction.DownFwd:
+                case Direction.DownBack:
+                    return DirectionTypes.Edge;
+                case Direction.RightUpFwd:
+                case Direction.RightUpBack:
+                case Direction.RightDownFwd:
+                case Direction.RightDownBack:
+                case Direction.LeftUpFwd:
+                case Direction.LeftUpBack:
+                case Direction.LeftDownFwd:
+                case Direction.LeftDownBack:
+                    return DirectionTypes.Corner;
+                default:
+                    return DirectionTypes.None;
+            }
+        }
+    }
+}
