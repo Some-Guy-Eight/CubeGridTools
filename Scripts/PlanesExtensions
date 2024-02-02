@@ -1,0 +1,55 @@
+using System;
+using UnityEngine;
+
+namespace SlimeGame {
+    public static class PlanesExtensions {
+        public static bool IsNone(this Planes a) {
+            return a == 0;
+        }
+        public static bool IsSingleFlag(this Planes a) {
+            return a != 0 && (a & (a - 1)) == 0;
+        }
+        public static bool HasFlags(this Planes a,Planes b) {
+            return (a & b) == b;
+        }
+        public static Planes ToggleFlags(this Planes a,Planes b) {
+            return a ^= b;
+        }
+        public static Planes SetFlags(this Planes a,Planes b) {
+            return a | b;
+        }
+        public static Planes UnsetFlags(this Planes a,Planes b) {
+            return a & (~b);
+        }
+        public static Planes OnlyPlanes(this Planes a) {
+            return a & (~Planes.OnlyPlanesMask);
+        }
+        public static Directions PolarDirections(this Planes planes,out Directions positive,out Directions negative) {
+            if(planes.HasFlags(Planes.ZY)) {
+                positive = Directions.Right;
+                negative = Directions.Left;
+                return Directions.Right | Directions.Left;
+            } else if(planes.HasFlags(Planes.XZ)) {
+                positive = Directions.Up;
+                negative = Directions.Down;
+                return Directions.Up | Directions.Down;
+            } else if(planes.HasFlags(Planes.XY)) {
+                positive = Directions.Fwd;
+                negative = Directions.Back;
+                return Directions.Fwd | Directions.Back;
+            }
+            throw new Exception($"Failed to polar directions from Planes");
+        }
+
+        public static int AxisComponent(this Planes planes,Vector3Int vector) {
+            if(planes.HasFlags(Planes.XZ) || planes.HasFlags(Planes.ZY)) {
+                return vector.x;
+            } else if(planes.HasFlags(Planes.ZY)) {
+                return vector.y;
+            } else if(planes.HasFlags(Planes.XY)) {
+                return vector.z;
+            }
+            throw new Exception($"Failed to polar directions from Planes");
+        }
+    }
+}
