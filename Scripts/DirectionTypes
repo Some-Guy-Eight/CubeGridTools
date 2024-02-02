@@ -1,0 +1,32 @@
+using System;
+
+namespace SlimeGame {
+    [Flags]
+    public enum DirectionTypes {
+        None = 0,
+        Face = 1,
+        Edge = 2,
+        Corner = 4,
+
+        Horizontal = 8,
+        Vertical = 16,
+
+        HorizontalFace = Face | Horizontal,
+        VerticalFace = Face | Vertical,
+
+        FaceAndEdge = Face | Edge,
+        HorizontalFaceAndEdge = Horizontal | Face | Edge,
+        VerticalFaceAndEdge = Vertical | Face | Edge,
+
+        FaceAndCorner = Face | Corner,
+        HorizontalFaceAndCorner = Horizontal | Face | Corner,
+        VerticalFaceAndCorner = Vertical | Face | Corner,
+
+        EdgeAndCorner = Edge | Corner,
+        HorizontalEdgeAndCorner = Horizontal | Edge | Corner,
+        VerticalEdgeAndCorner = Vertical | Edge | Corner,
+
+
+        All = Face | Edge | Corner,
+    }
+}
