@@ -1,0 +1,37 @@
+using System;
+
+namespace SlimeGame {
+    [Flags]
+    public enum PlaneRotations {
+        None        = 0,            /// index:  0
+        ZY          = 1,            /// index:  1
+        XZ          = 2,            /// index:  2
+        XY          = 4,            /// index:  3
+        Positive    = 16,           /// index:  5
+        Negative    = 32,           /// index:  6
+        CW          = 512,          /// index: 10
+        CCW         = 1024,         /// index: 11  
+        
+        OnlyPlanesMask = 0b_1111_1111_1111_1111_1111_1111_1111_000,
+
+        ZYCW        = ZY | CW,
+        ZYCCW       = ZY | CCW,
+        XZCW        = XZ | CW,
+        XZCCW       = XZ | CCW,
+        XYCW        = XY | CW,
+        XYCCW       = XY | CCW,
+
+        ZYPositive  = ZY | Positive,
+        ZYNegative  = ZY | Negative,
+        XZPositive  = XZ | Positive,
+        XZNegative  = XZ | Negative,
+        XYPositive  = XY | Positive,
+        XYNegative  = XY | Negative,
+
+        ZYXZ        = ZY | XZ,
+        ZYXY        = ZY | XY,
+        XZXY        = XZ | XY,
+        ZYXZXY      = ZY | XZ | XY,
+        AllPlanes   = ZY | XZ | XY,
+    }
+}
