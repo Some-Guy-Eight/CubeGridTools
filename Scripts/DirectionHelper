@@ -1,0 +1,234 @@
+namespace SlimeGame {
+    public static class DirectionHelper {       
+        public static Direction RandomAnyDirection() {
+            int i = UnityEngine.Random.Range(0,26);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Up;
+                case  3 : return Direction.Down;
+                case  4 : return Direction.Fwd;
+                case  5 : return Direction.Back;
+                case  6 : return Direction.RightUp;
+                case  7 : return Direction.RightDown;
+                case  8 : return Direction.RightFwd;
+                case  9 : return Direction.RightBack;
+                case 10 : return Direction.LeftUp;
+                case 11 : return Direction.LeftDown;
+                case 12 : return Direction.LeftFwd;
+                case 13 : return Direction.LeftBack;
+                case 14 : return Direction.UpFwd;
+                case 15 : return Direction.UpBack;
+                case 16 : return Direction.DownFwd;
+                case 17 : return Direction.DownBack;
+                case 18 : return Direction.RightUpFwd;
+                case 19 : return Direction.RightUpBack;
+                case 20 : return Direction.RightDownFwd;
+                case 21 : return Direction.RightDownBack;
+                case 22 : return Direction.LeftUpFwd;
+                case 23 : return Direction.LeftUpBack;
+                case 24 : return Direction.LeftDownFwd;
+                case 25 : return Direction.LeftDownBack;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomFaceDirection() {
+            int i = UnityEngine.Random.Range(0,6);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Up;
+                case  3 : return Direction.Down;
+                case  4 : return Direction.Fwd;
+                case  5 : return Direction.Back;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomEdgeDirection() {
+            int i = UnityEngine.Random.Range(6,17);       
+            switch(i) {
+                case  6 : return Direction.RightUp;
+                case  7 : return Direction.RightDown;
+                case  8 : return Direction.RightFwd;
+                case  9 : return Direction.RightBack;
+                case 10 : return Direction.LeftUp;
+                case 11 : return Direction.LeftDown;
+                case 12 : return Direction.LeftFwd;
+                case 13 : return Direction.LeftBack;
+                case 14 : return Direction.UpFwd;
+                case 15 : return Direction.UpBack;
+                case 16 : return Direction.DownFwd;
+                case 17 : return Direction.DownBack;
+                default : return Direction.None;
+            }
+        }
+        public static Direction RandomCornerDirection() {
+            int i = UnityEngine.Random.Range(18,26);       
+            switch(i) {
+                case 18 : return Direction.RightUpFwd;
+                case 19 : return Direction.RightUpBack;
+                case 20 : return Direction.RightDownFwd;
+                case 21 : return Direction.RightDownBack;
+                case 22 : return Direction.LeftUpFwd;
+                case 23 : return Direction.LeftUpBack;
+                case 24 : return Direction.LeftDownFwd;
+                case 25 : return Direction.LeftDownBack;
+                default : return Direction.None;
+            }
+        }
+        public static Direction RandomFaceOrEdgeDirection() {
+            int i = UnityEngine.Random.Range(0,17);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Up;
+                case  3 : return Direction.Down;
+                case  4 : return Direction.Fwd;
+                case  5 : return Direction.Back;
+                case  6 : return Direction.RightUp;
+                case  7 : return Direction.RightDown;
+                case  8 : return Direction.RightFwd;
+                case  9 : return Direction.RightBack;
+                case 10 : return Direction.LeftUp;
+                case 11 : return Direction.LeftDown;
+                case 12 : return Direction.LeftFwd;
+                case 13 : return Direction.LeftBack;
+                case 14 : return Direction.UpFwd;
+                case 15 : return Direction.UpBack;
+                case 16 : return Direction.DownFwd;
+                case 17 : return Direction.DownBack;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomFaceOrCornerDirection() {
+            int i = UnityEngine.Random.Range(0,14);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Up;
+                case  3 : return Direction.Down;
+                case  4 : return Direction.Fwd;
+                case  5 : return Direction.Back;
+                case  6 : return Direction.RightUpFwd;
+                case  7 : return Direction.RightUpBack;
+                case  8 : return Direction.RightDownFwd;
+                case  9 : return Direction.RightDownBack;
+                case 10 : return Direction.LeftUpFwd;
+                case 11 : return Direction.LeftUpBack;
+                case 12 : return Direction.LeftDownFwd;
+                case 13 : return Direction.LeftDownBack;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomEdgeOrCornerDirection() {
+            int i = UnityEngine.Random.Range(0,20);       
+            switch(i) {
+                case  0 : return Direction.RightUp;
+                case  1 : return Direction.RightDown;
+                case  2 : return Direction.RightFwd;
+                case  3 : return Direction.RightBack;
+                case  4 : return Direction.LeftUp;
+                case  5 : return Direction.LeftDown;
+                case  6 : return Direction.LeftFwd; 
+                case  7 : return Direction.LeftBack; 
+                case  8 : return Direction.UpFwd; 
+                case  9 : return Direction.UpBack; 
+                case 10 : return Direction.DownFwd; 
+                case 11 : return Direction.DownBack; 
+                case 12 : return Direction.RightUpFwd; 
+                case 13 : return Direction.RightUpBack; 
+                case 14 : return Direction.RightDownFwd; 
+                case 15 : return Direction.RightDownBack; 
+                case 16 : return Direction.LeftUpFwd; 
+                case 17 : return Direction.LeftUpBack; 
+                case 18 : return Direction.LeftDownFwd; 
+                case 19 : return Direction.LeftDownBack; 
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomHorizontalFaceDirection() {
+            int i = UnityEngine.Random.Range(0,4);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Fwd;
+                case  3 : return Direction.Back;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomZYDirection() {
+            int i = UnityEngine.Random.Range(0,8);
+            switch(i) {
+                case  0 : return Direction.Up;
+                case  1 : return Direction.Down;
+                case  2 : return Direction.Fwd;
+                case  3 : return Direction.Back;
+                case  4 : return Direction.UpFwd;
+                case  5 : return Direction.UpBack;
+                case  6 : return Direction.DownFwd;
+                case  7 : return Direction.DownBack;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomXZDirection() {
+            int i = UnityEngine.Random.Range(0,8);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Fwd;
+                case  3 : return Direction.Back;
+                case  4 : return Direction.RightFwd;
+                case  5 : return Direction.RightBack;
+                case  6 : return Direction.LeftFwd;
+                case  7 : return Direction.LeftBack;
+                default : return Direction.None;
+            }
+        }
+        public static Direction RandomXYDirection() {
+            int i = UnityEngine.Random.Range(0,8);       
+            switch(i) {
+                case  0 : return Direction.Right;
+                case  1 : return Direction.Left;
+                case  2 : return Direction.Up;
+                case  3 : return Direction.Down;
+                case  4 : return Direction.RightUp;
+                case  5 : return Direction.RightDown;
+                case  6 : return Direction.LeftUp;
+                case  7 : return Direction.LeftDown;
+                default : return Direction.None;
+            }
+        }
+        public static Direction RandomVerticalFaceDirection() {
+            int i = UnityEngine.Random.Range(0,2);       
+            switch(i) {
+                case  0 : return Direction.Up;
+                case  1 : return Direction.Down;
+                default: return Direction.None;
+            }
+        }
+        public static Direction RandomVerticalDirection() {
+            int i = UnityEngine.Random.Range(0,18);       
+            switch(i) {
+                case  0 : return Direction.Up;
+                case  1 : return Direction.Down;
+                case  2 : return Direction.RightUp;
+                case  3 : return Direction.RightDown;
+                case  4 : return Direction.LeftUp;
+                case  5 : return Direction.LeftDown;
+                case  6 : return Direction.UpFwd;
+                case  7 : return Direction.UpBack;
+                case  8 : return Direction.DownFwd;
+                case  9 : return Direction.DownBack;
+                case 10 : return Direction.RightUpFwd;
+                case 11 : return Direction.RightUpBack;
+                case 12 : return Direction.RightDownFwd;
+                case 13 : return Direction.RightDownBack;
+                case 14 : return Direction.LeftUpFwd;
+                case 15 : return Direction.LeftUpBack;
+                case 16 : return Direction.LeftDownFwd;
+                case 17 : return Direction.LeftDownBack;
+                default: return Direction.None;
+            }
+        }
+    }
+}
