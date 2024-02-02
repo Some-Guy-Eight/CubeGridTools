@@ -1,0 +1,67 @@
+using System;
+
+namespace SlimeGame {
+    public static class DirectionTypeExtensions {
+        public static bool HasFlags(this DirectionTypes a,DirectionTypes b) {
+            return (a & b) == b;
+        }
+        public static DirectionTypes ToggleFlags(this DirectionTypes a,DirectionTypes b) {
+            return a ^= b;
+        }
+        public static bool IsNone(this DirectionTypes a) {
+            return ((DirectionTypes)1 | a) == 0;
+        }
+        public static Directions[] ToDirectionArray(this DirectionTypes directionType) {
+            switch(directionType) {
+                case DirectionTypes.All:                        return DirectionTypeHelper.All;
+                case DirectionTypes.Face:                       return DirectionTypeHelper.Face;
+                case DirectionTypes.Edge:                       return DirectionTypeHelper.Edge;
+                case DirectionTypes.Corner:                     return DirectionTypeHelper.Corner;
+                case DirectionTypes.FaceAndEdge:                return DirectionTypeHelper.FaceAndEdge;
+                case DirectionTypes.FaceAndCorner:              return DirectionTypeHelper.FaceAndCorner;
+                case DirectionTypes.EdgeAndCorner:              return DirectionTypeHelper.EdgeAndCorner;
+                case DirectionTypes.Horizontal:                 return DirectionTypeHelper.Horizontal;
+                case DirectionTypes.HorizontalFace:             return DirectionTypeHelper.HorizontalFace;
+                case DirectionTypes.HorizontalFaceAndEdge:      return DirectionTypeHelper.HorizontalFaceAndEdge;
+                case DirectionTypes.HorizontalFaceAndCorner:    return DirectionTypeHelper.HorizontalFaceAndCorner;
+                case DirectionTypes.Vertical:                   return DirectionTypeHelper.Vertical;
+                case DirectionTypes.VerticalFace:               return DirectionTypeHelper.VerticalFace;
+                case DirectionTypes.VerticalFaceAndEdge:        return DirectionTypeHelper.VerticalFaceAndEdge;
+                case DirectionTypes.VerticalFaceAndCorner:      return DirectionTypeHelper.VerticalFaceAndCorner;
+                default:                                        return new Directions[] { Directions.None };
+            }
+        }
+        public static Direction RandomDirection(this DirectionTypes directionType) {
+            switch(directionType) {
+                case DirectionTypes.All:                return DirectionHelper.RandomAnyDirection();
+                case DirectionTypes.Face:               return DirectionHelper.RandomFaceDirection();
+                case DirectionTypes.Edge:               return DirectionHelper.RandomEdgeDirection();
+                case DirectionTypes.Corner:             return DirectionHelper.RandomCornerDirection();
+                case DirectionTypes.FaceAndEdge:        return DirectionHelper.RandomFaceOrEdgeDirection();
+                case DirectionTypes.FaceAndCorner:      return DirectionHelper.RandomFaceOrCornerDirection();
+                case DirectionTypes.EdgeAndCorner:      return DirectionHelper.RandomEdgeOrCornerDirection();
+                case DirectionTypes.Horizontal:         return DirectionHelper.RandomXZDirection();
+                case DirectionTypes.HorizontalFace:     return DirectionHelper.RandomHorizontalFaceDirection();
+                case DirectionTypes.Vertical:           return DirectionHelper.RandomVerticalDirection();
+                case DirectionTypes.VerticalFace:       return DirectionHelper.RandomVerticalFaceDirection();
+                default:                                return Direction.None;
+            }
+        }
+        public static Directions RandomDirections(this DirectionTypes directionType) {
+            switch(directionType) {
+                case DirectionTypes.All:                return DirectionsHelper.RandomAnyDirections();
+                case DirectionTypes.Face:               return DirectionsHelper.RandomFaceDirections();
+                case DirectionTypes.Edge:               return DirectionsHelper.RandomEdgeDirections();
+                case DirectionTypes.Corner:             return DirectionsHelper.RandomCornerDirections();
+                case DirectionTypes.FaceAndEdge:        return DirectionsHelper.RandomFaceOrEdgeDirections();
+                case DirectionTypes.FaceAndCorner:      return DirectionsHelper.RandomFaceOrCornerDirections();
+                case DirectionTypes.EdgeAndCorner:      return DirectionsHelper.RandomEdgeOrCornerDirections();
+                case DirectionTypes.Horizontal:         return DirectionsHelper.RandomXZDirections();
+                case DirectionTypes.HorizontalFace:     return DirectionsHelper.RandomHorizontalFaceDirections();
+                case DirectionTypes.Vertical:           return DirectionsHelper.RandomVerticalDirections();
+                case DirectionTypes.VerticalFace:       return DirectionsHelper.RandomVerticalFaceDirections();
+                default:                                return Directions.None;
+            }
+        }
+    }
+}
