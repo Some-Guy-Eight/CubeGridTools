@@ -1,7 +1,7 @@
 using System;
 
 namespace SlimeGame {
-    public static class DirectionTypeExtensions {
+    public static class DirectionTypesExtensions {
         public static bool HasFlags(this DirectionTypes a,DirectionTypes b) {
             return (a & b) == b;
         }
@@ -13,21 +13,21 @@ namespace SlimeGame {
         }
         public static Directions[] ToDirectionArray(this DirectionTypes directionType) {
             switch(directionType) {
-                case DirectionTypes.All:                        return DirectionTypeHelper.All;
-                case DirectionTypes.Face:                       return DirectionTypeHelper.Face;
-                case DirectionTypes.Edge:                       return DirectionTypeHelper.Edge;
-                case DirectionTypes.Corner:                     return DirectionTypeHelper.Corner;
-                case DirectionTypes.FaceAndEdge:                return DirectionTypeHelper.FaceAndEdge;
-                case DirectionTypes.FaceAndCorner:              return DirectionTypeHelper.FaceAndCorner;
-                case DirectionTypes.EdgeAndCorner:              return DirectionTypeHelper.EdgeAndCorner;
-                case DirectionTypes.Horizontal:                 return DirectionTypeHelper.Horizontal;
-                case DirectionTypes.HorizontalFace:             return DirectionTypeHelper.HorizontalFace;
-                case DirectionTypes.HorizontalFaceAndEdge:      return DirectionTypeHelper.HorizontalFaceAndEdge;
-                case DirectionTypes.HorizontalFaceAndCorner:    return DirectionTypeHelper.HorizontalFaceAndCorner;
-                case DirectionTypes.Vertical:                   return DirectionTypeHelper.Vertical;
-                case DirectionTypes.VerticalFace:               return DirectionTypeHelper.VerticalFace;
-                case DirectionTypes.VerticalFaceAndEdge:        return DirectionTypeHelper.VerticalFaceAndEdge;
-                case DirectionTypes.VerticalFaceAndCorner:      return DirectionTypeHelper.VerticalFaceAndCorner;
+                case DirectionTypes.All:                        return DirectionTypesHelper.All;
+                case DirectionTypes.Face:                       return DirectionTypesHelper.Face;
+                case DirectionTypes.Edge:                       return DirectionTypesHelper.Edge;
+                case DirectionTypes.Corner:                     return DirectionTypesHelper.Corner;
+                case DirectionTypes.FaceAndEdge:                return DirectionTypesHelper.FaceAndEdge;
+                case DirectionTypes.FaceAndCorner:              return DirectionTypesHelper.FaceAndCorner;
+                case DirectionTypes.EdgeAndCorner:              return DirectionTypesHelper.EdgeAndCorner;
+                case DirectionTypes.Horizontal:                 return DirectionTypesHelper.Horizontal;
+                case DirectionTypes.HorizontalFace:             return DirectionTypesHelper.HorizontalFace;
+                case DirectionTypes.HorizontalFaceAndEdge:      return DirectionTypesHelper.HorizontalFaceAndEdge;
+                case DirectionTypes.HorizontalFaceAndCorner:    return DirectionTypesHelper.HorizontalFaceAndCorner;
+                case DirectionTypes.Vertical:                   return DirectionTypesHelper.Vertical;
+                case DirectionTypes.VerticalFace:               return DirectionTypesHelper.VerticalFace;
+                case DirectionTypes.VerticalFaceAndEdge:        return DirectionTypesHelper.VerticalFaceAndEdge;
+                case DirectionTypes.VerticalFaceAndCorner:      return DirectionTypesHelper.VerticalFaceAndCorner;
                 default:                                        return new Directions[] { Directions.None };
             }
         }
