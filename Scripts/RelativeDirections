@@ -1,0 +1,186 @@
+using UnityEngine;
+
+namespace SlimeGame {
+    public class RelativeDirections {
+
+        public Directions right;
+        public Directions up;
+        public Directions fwd;
+
+        #region direction vectors
+        public static Vector3Int RightUp                        => Vector3Int.right  + Vector3Int.up;
+        public static Vector3Int RightDown                      => Vector3Int.right  + Vector3Int.down;
+        public static Vector3Int RightFwd                       => Vector3Int.right  + Vector3Int.forward;
+        public static Vector3Int RightBack                      => Vector3Int.right  + Vector3Int.back;
+        public static Vector3Int LeftUp                         => Vector3Int.left   + Vector3Int.up;
+        public static Vector3Int LeftDown                       => Vector3Int.left   + Vector3Int.down;
+        public static Vector3Int LeftFwd                        => Vector3Int.left   + Vector3Int.forward;
+        public static Vector3Int LeftBack                       => Vector3Int.left   + Vector3Int.back;
+        public static Vector3Int UpFwd                          => Vector3Int.up     + Vector3Int.forward;
+        public static Vector3Int UpBack                         => Vector3Int.up     + Vector3Int.back;
+        public static Vector3Int DownFwd                        => Vector3Int.down   + Vector3Int.forward;
+        public static Vector3Int DownBack                       => Vector3Int.down   + Vector3Int.back;
+        public static Vector3Int RightUpFwd                     => Vector3Int.right  + Vector3Int.up     + Vector3Int.forward;
+        public static Vector3Int RightUpBack                    => Vector3Int.right  + Vector3Int.up     + Vector3Int.back;
+        public static Vector3Int RightDownFwd                   => Vector3Int.right  + Vector3Int.down   + Vector3Int.forward;
+        public static Vector3Int RightDownBack                  => Vector3Int.right  + Vector3Int.down   + Vector3Int.back;
+        public static Vector3Int LeftUpFwd                      => Vector3Int.left   + Vector3Int.up     + Vector3Int.forward;
+        public static Vector3Int LeftUpBack                     => Vector3Int.left   + Vector3Int.up     + Vector3Int.back;
+        public static Vector3Int LeftDownFwd                    => Vector3Int.left   + Vector3Int.down   + Vector3Int.forward;
+        public static Vector3Int LeftDownBack                   => Vector3Int.left   + Vector3Int.down   + Vector3Int.back;
+        #endregion
+        #region string name to bitwise directions
+        public static RelativeDirections Default                => _100000_001000_000010; /// Fwd_ZY_XY
+        public static RelativeDirections Zero                   => _000000_000000_000000;
+        // Right_ZY_XZ_XY face
+        public static RelativeDirections Right                  => _000001_001000_100000;
+        public static RelativeDirections Right_ZY_XY            => _000001_001000_100000; /// Default XY & XZ => XYForward
+        public static RelativeDirections Right_XZ               => _001000_000010_100000; /// Default XZ
+        // left face
+        public static RelativeDirections Left                   => _000010_001000_010000;
+        public static RelativeDirections Left_ZY_XY             => _000010_001000_010000; /// Default XY & XZ => XYForward
+        public static RelativeDirections Left_XZ                => _000100_000010_010000; /// Default XZ
+        // up face                                                                             
+        public static RelativeDirections Up                     => _010000_000010_001000;
+        public static RelativeDirections Up_ZYPositive          => _000001_010000_001000; /// Default ZY
+        public static RelativeDirections Up_ZYNegative          => _000010_100000_001000; /// ZY       
+        public static RelativeDirections Up_XZ                  => _010000_000010_001000; /// Default XZ
+        public static RelativeDirections Up_XYPositive          => _100000_000001_001000; /// Default XY
+        public static RelativeDirections Up_XYNegative          => _010000_000010_001000; /// XY
+        // down face
+        public static RelativeDirections Down                   => _100000_000010_000100;
+        public static RelativeDirections Down_ZYPositive        => _000001_100000_000100; /// Default ZY
+        public static RelativeDirections Down_ZYNegative        => _000010_010000_000100; /// ZY      
+        public static RelativeDirections Down_XZ                => _100000_000010_000100; /// Default XZ
+        public static RelativeDirections Down_XYPositive        => _100000_000010_000100; /// Default XY
+        public static RelativeDirections Down_XYNegative        => _010000_000001_000100; /// XY        
+        // fwd face
+        public static RelativeDirections Fwd                    => _100000_001000_000010;
+        public static RelativeDirections Fwd_ZY_XY              => _100000_001000_000010; /// Default ZY & XY => XYForward
+        public static RelativeDirections Fwd_XZPositive         => _010000_000100_000010; /// Default XZ => XZUp
+        public static RelativeDirections Fwd_XZNegative         => _100000_001000_000010; /// XZDown
+        // back face
+        public static RelativeDirections Back                   => _010000_001000_000001;
+        public static RelativeDirections Back_ZY_XY             => _010000_001000_000001; /// Default ZY & XY => XYForward
+        public static RelativeDirections Back_XZPositive        => _010000_001000_000001; /// Default XZ => XZUp
+        public static RelativeDirections Back_XZNegative        => _100000_000100_000001; /// XZDown
+        // ZY & XY edge ( including: XZ UB & DF )
+        public static RelativeDirections RightUp_ZY_XY          => _000001_011000_101000;
+        public static RelativeDirections RightDown_ZY_XY        => _000001_101000_100100;
+        public static RelativeDirections RightFwd_ZY_XY         => _100001_001000_100010;
+        public static RelativeDirections RightBack_ZY_XY        => _010001_001000_100001;
+        public static RelativeDirections LeftUp_ZY_XY           => _000010_101000_011000;
+        public static RelativeDirections LeftDown_ZY_XY         => _000010_011000_010100;
+        public static RelativeDirections LeftFwd_ZY_XY          => _100010_001000_010010;
+        public static RelativeDirections LeftBack_ZY_XY         => _010010_001000_010001;
+        public static RelativeDirections UpFwd_ZY_XY            => _100000_001001_001010;
+        public static RelativeDirections UpBack_ZY_XZ_XY        => _010000_001010_001001;
+        public static RelativeDirections DownFwd_ZY_XZ_XY       => _100000_001010_000110;
+        public static RelativeDirections DownBack_ZY_XY         => _010000_001001_000101;
+        // ZY & XY corner
+        public static RelativeDirections RightUpFwd_ZY_XY       => _100001_011001_101010;
+        public static RelativeDirections RightUpBack_ZY_XY      => _100001_011010_101001;
+        public static RelativeDirections RightDownFwd_ZY_XY     => _010001_101010_100110;
+        public static RelativeDirections RightDownBack_ZY_XY    => _010001_101001_100101;
+        public static RelativeDirections LeftUpFwd_ZY_XY        => _100010_101001_011010;
+        public static RelativeDirections LeftUpBack_ZY_XY       => _010010_101010_011001;
+        public static RelativeDirections LeftDownFwd_ZY_XY      => _100010_011010_010110;
+        public static RelativeDirections LeftDownBack_ZY_XY     => _010010_011001_010101;
+        // XZ edge ( except: XZ UB & DF => same as XZ & XY edge )
+        public static RelativeDirections RightUp_XZ             => _011000_000010_101000;
+        public static RelativeDirections RightDown_XZ           => _101000_000010_100100;
+        public static RelativeDirections RightFwd_XZ            => _001000_010010_100010;
+        public static RelativeDirections RightBack_XZ           => _001000_100010_100001;
+        public static RelativeDirections LeftUp_XZ              => _010100_000010_011000;
+        public static RelativeDirections LeftDown_XZ            => _100100_000010_010100;
+        public static RelativeDirections LeftFwd_XZ             => _000100_100010_010010;
+        public static RelativeDirections LeftBack_XZ            => _000100_010010_010001;
+        public static RelativeDirections UpForward_XZ           => _010000_000110_001010;
+        public static RelativeDirections DownBack_XZ            => _100000_000110_000101;
+        // XZ corner                                                                         
+        public static RelativeDirections RightUpFwd_XZ          => _011000_010110_101010;
+        public static RelativeDirections RightUpBack_XZ         => _011000_101010_101001;
+        public static RelativeDirections RightDownFwd_XZ        => _101000_011010_100110;
+        public static RelativeDirections RightDownBack_XZ       => _101000_100110_100101;
+        public static RelativeDirections LeftUpFwd_XZ           => _010100_100110_011010;
+        public static RelativeDirections LeftUpBack_XZ          => _010100_011010_011001;
+        public static RelativeDirections LeftDownFwd_XZ         => _100100_101010_010110;
+        public static RelativeDirections LeftDownBack_XZ        => _100100_010110_010101;
+        #endregion
+        #region bitstring relative directions
+        //  Right_ZY_XZ_XY   left    up      down   fwd  back  
+        // _100000 _010000 _001000 _000100 _000010 _000001
+        // Default Planes => XY Planes
+        //  ZY Planes ( x axis ) == { ZY Planes ( z axis ) => ZY Planes ( x axis ) }
+        //  XZ Planes ( y axis ) == { ZY Planes ( z axis ) => XZ Planes ( y axis ) }
+        //  XY Planes ( z axis ) == { ZY Planes ( z axis ) }
+
+        // zero
+        public static RelativeDirections _000000_000000_000000 => new RelativeDirections { right = Directions.None          ,up = Directions.None           ,fwd = Directions.None          };
+        // Right_ZY_XZ_XY
+        public static RelativeDirections _000001_001000_100000 => new RelativeDirections { right = Directions.Back          ,up = Directions.Up             ,fwd = Directions.Right         }; // ZY & XY           => Default ZY & XY
+        public static RelativeDirections _001000_000010_100000 => new RelativeDirections { right = Directions.Up            ,up = Directions.Fwd            ,fwd = Directions.Right         }; // XZ                => Default XZ
+        // left
+        public static RelativeDirections _000010_001000_010000 => new RelativeDirections { right = Directions.Fwd           ,up = Directions.Up             ,fwd = Directions.Left          }; // ZY & XY           => Default ZY & XY
+        public static RelativeDirections _000100_000010_010000 => new RelativeDirections { right = Directions.Down          ,up = Directions.Fwd            ,fwd = Directions.Left          }; // XZ                => Default XZ
+        // up
+        public static RelativeDirections _000001_010000_001000 => new RelativeDirections { right = Directions.Back          ,up = Directions.Left           ,fwd = Directions.Up            }; // ZYRight           => Default ZY
+        public static RelativeDirections _000010_100000_001000 => new RelativeDirections { right = Directions.Fwd           ,up = Directions.Right          ,fwd = Directions.Up            }; // ZYLeft 
+        public static RelativeDirections _010000_000010_001000 => new RelativeDirections { right = Directions.Left          ,up = Directions.Fwd            ,fwd = Directions.Up            }; // XZFwd & XYBack    => Default XZ
+        public static RelativeDirections _100000_000001_001000 => new RelativeDirections { right = Directions.Right         ,up = Directions.Back           ,fwd = Directions.Up            }; // XYForward
+        // down
+        public static RelativeDirections _000001_100000_000100 => new RelativeDirections { right = Directions.Back          ,up = Directions.Right          ,fwd = Directions.Down          }; // ZYRight           => Default ZY
+        public static RelativeDirections _000010_010000_000100 => new RelativeDirections { right = Directions.Fwd           ,up = Directions.Left           ,fwd = Directions.Down          }; // ZYLeft    
+        public static RelativeDirections _100000_000010_000100 => new RelativeDirections { right = Directions.Right         ,up = Directions.Fwd            ,fwd = Directions.Down          }; // XZFwd & XZBack    => Default XZ & XY
+        public static RelativeDirections _010000_000001_000100 => new RelativeDirections { right = Directions.Left          ,up = Directions.Back           ,fwd = Directions.Down          }; // XYBack 
+        // fwd
+        public static RelativeDirections _100000_001000_000010 => new RelativeDirections { right = Directions.Right         ,up = Directions.Up             ,fwd = Directions.Fwd           }; // ZY, XZDown & XY   => Default ZY & XY
+        public static RelativeDirections _010000_000100_000010 => new RelativeDirections { right = Directions.Left          ,up = Directions.Down           ,fwd = Directions.Fwd           }; // XZUp              => Default XZ
+        // back                                                                                    
+        public static RelativeDirections _010000_001000_000001 => new RelativeDirections { right = Directions.Left          ,up = Directions.Up             ,fwd = Directions.Back          }; // ZY, XZUp & XY     => Default ZY, XZ, & ZY 
+        public static RelativeDirections _100000_000100_000001 => new RelativeDirections { right = Directions.Right         ,up = Directions.Down           ,fwd = Directions.Back          }; // XZDown        
+        // ZY & XY edge ( including: XZ UB & DF )
+        public static RelativeDirections _000001_011000_101000 => new RelativeDirections { right = Directions.Back          ,up = Directions.LeftUp         ,fwd = Directions.RightUp       }; // RU  ZY & XY       => Default
+        public static RelativeDirections _000001_101000_100100 => new RelativeDirections { right = Directions.Back          ,up = Directions.RightUp        ,fwd = Directions.RightDown     }; // RD  ZY & XY       => Default
+        public static RelativeDirections _100001_001000_100010 => new RelativeDirections { right = Directions.RightBack     ,up = Directions.Up             ,fwd = Directions.RightFwd      }; // RF  ZY & XY       => Default
+        public static RelativeDirections _010001_001000_100001 => new RelativeDirections { right = Directions.LeftBack      ,up = Directions.Up             ,fwd = Directions.RightBack     }; // RB  ZY & XY       => Default
+        public static RelativeDirections _000010_101000_011000 => new RelativeDirections { right = Directions.Fwd           ,up = Directions.RightUp        ,fwd = Directions.LeftUp        }; // LU  ZY & XY       => Default
+        public static RelativeDirections _000010_011000_010100 => new RelativeDirections { right = Directions.Fwd           ,up = Directions.LeftUp         ,fwd = Directions.LeftDown      }; // LD  ZY & XY       => Default
+        public static RelativeDirections _100010_001000_010010 => new RelativeDirections { right = Directions.RightFwd      ,up = Directions.Up             ,fwd = Directions.LeftFwd       }; // LF  ZY & XY       => Default
+        public static RelativeDirections _010010_001000_010001 => new RelativeDirections { right = Directions.LeftFwd       ,up = Directions.Up             ,fwd = Directions.LeftBack      }; // LB  ZY & XY       => Default
+        public static RelativeDirections _100000_001001_001010 => new RelativeDirections { right = Directions.Right         ,up = Directions.UpBack         ,fwd = Directions.UpFwd         }; // UF  ZY & XY       => Default
+        public static RelativeDirections _010000_001010_001001 => new RelativeDirections { right = Directions.Left          ,up = Directions.UpFwd          ,fwd = Directions.UpBack        }; // UB  ZY, XZ & XY   => Default
+        public static RelativeDirections _100000_001010_000110 => new RelativeDirections { right = Directions.Right         ,up = Directions.UpFwd          ,fwd = Directions.DownFwd       }; // DF  ZY, XZ, & XY  => Default
+        public static RelativeDirections _010000_001001_000101 => new RelativeDirections { right = Directions.Left          ,up = Directions.UpBack         ,fwd = Directions.DownBack      }; // DB  ZY & XY       => Default
+        public static RelativeDirections _100001_011001_101010 => new RelativeDirections { right = Directions.RightBack     ,up = Directions.LeftUpBack     ,fwd = Directions.RightUpFwd    }; // RF  ZY & XY       => Default
+        // corner                                                     
+        public static RelativeDirections _100001_011010_101001 => new RelativeDirections { right = Directions.RightBack     ,up = Directions.LeftUpFwd      ,fwd = Directions.RightUpBack   }; // RUB ZY & XY       => Default
+        public static RelativeDirections _010001_101010_100110 => new RelativeDirections { right = Directions.LeftBack      ,up = Directions.RightUpFwd     ,fwd = Directions.RightDownFwd  }; // RDF ZY & XY       => Default
+        public static RelativeDirections _010001_101001_100101 => new RelativeDirections { right = Directions.LeftBack      ,up = Directions.RightUpBack    ,fwd = Directions.RightDownBack }; // RDB ZY & XY       => Default
+        public static RelativeDirections _100010_101001_011010 => new RelativeDirections { right = Directions.RightFwd      ,up = Directions.RightUpBack    ,fwd = Directions.LeftUpFwd     }; // LUF ZY & XY       => Default
+        public static RelativeDirections _010010_101010_011001 => new RelativeDirections { right = Directions.LeftFwd       ,up = Directions.RightUpFwd     ,fwd = Directions.LeftUpBack    }; // LUB ZY & XY       => Default
+        public static RelativeDirections _100010_011010_010110 => new RelativeDirections { right = Directions.RightFwd      ,up = Directions.LeftUpFwd      ,fwd = Directions.LeftDownFwd   }; // LDF ZY & XY       => Default
+        public static RelativeDirections _010010_011001_010101 => new RelativeDirections { right = Directions.LeftFwd       ,up = Directions.LeftUpBack     ,fwd = Directions.LeftDownBack  }; // LDB ZY & XY       => Default
+        // XZ edge ( except: XZ UB & DF => in XZ & XY edge )
+        public static RelativeDirections _011000_000010_101000 => new RelativeDirections { right = Directions.LeftUp        ,up = Directions.Fwd            ,fwd = Directions.RightUp       }; // RU  XZ
+        public static RelativeDirections _101000_000010_100100 => new RelativeDirections { right = Directions.RightUp       ,up = Directions.Fwd            ,fwd = Directions.RightDown     }; // RD  XZ
+        public static RelativeDirections _001000_010010_100010 => new RelativeDirections { right = Directions.Up            ,up = Directions.LeftFwd        ,fwd = Directions.RightFwd      }; // RF  XZ
+        public static RelativeDirections _001000_100010_100001 => new RelativeDirections { right = Directions.Up            ,up = Directions.RightFwd       ,fwd = Directions.RightBack     }; // RB  XZ
+        public static RelativeDirections _010100_000010_011000 => new RelativeDirections { right = Directions.LeftDown      ,up = Directions.Fwd            ,fwd = Directions.LeftUp        }; // LU  XZ
+        public static RelativeDirections _100100_000010_010100 => new RelativeDirections { right = Directions.RightDown     ,up = Directions.Fwd            ,fwd = Directions.LeftDown      }; // LD  XZ
+        public static RelativeDirections _000100_100010_010010 => new RelativeDirections { right = Directions.Down          ,up = Directions.RightFwd       ,fwd = Directions.LeftFwd       }; // LF  XZ
+        public static RelativeDirections _000100_010010_010001 => new RelativeDirections { right = Directions.Down          ,up = Directions.LeftFwd        ,fwd = Directions.LeftBack      }; // LB  XZ        
+        public static RelativeDirections _010000_000110_001010 => new RelativeDirections { right = Directions.Left          ,up = Directions.DownFwd        ,fwd = Directions.UpFwd         }; // UF  XZ
+        public static RelativeDirections _100000_000110_000101 => new RelativeDirections { right = Directions.Right         ,up = Directions.DownFwd        ,fwd = Directions.DownBack      }; // DB  XZ
+        // XZ corner                                
+        public static RelativeDirections _011000_010110_101010 => new RelativeDirections { right = Directions.LeftUp        ,up = Directions.LeftDownFwd    ,fwd = Directions.RightUpFwd    }; // RUF XZ     
+        public static RelativeDirections _011000_101010_101001 => new RelativeDirections { right = Directions.LeftUp        ,up = Directions.RightUpFwd     ,fwd = Directions.RightUpBack   }; // RUB XZ        
+        public static RelativeDirections _101000_011010_100110 => new RelativeDirections { right = Directions.RightUp       ,up = Directions.LeftUpFwd      ,fwd = Directions.RightDownFwd  }; // RDF XZ   
+        public static RelativeDirections _101000_100110_100101 => new RelativeDirections { right = Directions.RightUp       ,up = Directions.RightDownFwd   ,fwd = Directions.RightDownBack }; // RDB XZ      
+        public static RelativeDirections _010100_100110_011010 => new RelativeDirections { right = Directions.LeftDown      ,up = Directions.RightDownFwd   ,fwd = Directions.LeftUpFwd     }; // LUF XZ      
+        public static RelativeDirections _010100_011010_011001 => new RelativeDirections { right = Directions.LeftDown      ,up = Directions.LeftUpFwd      ,fwd = Directions.LeftUpBack    }; // LUB XZ        
+        public static RelativeDirections _100100_101010_010110 => new RelativeDirections { right = Directions.RightDown     ,up = Directions.RightUpFwd     ,fwd = Directions.LeftDownFwd   }; // LDF XZ    
+        public static RelativeDirections _100100_010110_010101 => new RelativeDirections { right = Directions.RightDown     ,up = Directions.LeftDownFwd    ,fwd = Directions.LeftDownBack  }; // LDB XZ
+        #endregion                                                                
+    }
+}
